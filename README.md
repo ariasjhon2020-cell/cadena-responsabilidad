@@ -34,7 +34,8 @@ Compilar:
 
 ```bash
 g++ main.cpp -o programa
-## 📊 Diagrama de Clases
+
+ 📊 Diagrama de Clases
 ```mermaid
 classDiagram
     Handler <|-- ValidarVacio
