@@ -34,3 +34,12 @@ Compilar:
 
 ```bash
 g++ main.cpp -o programa
+## 📊 Diagrama de Clases
+```mermaid
+classDiagram
+    Handler <|-- ValidarVacio
+    Handler <|-- ValidarLongitud
+    Handler <|-- ValidarNumero
+    Handler : +setSiguiente(Handler*)
+    Handler : +manejar(string)
+```
