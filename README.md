@@ -35,12 +35,3 @@ classDiagram
     Handler <|-- ValidarNumero
     Handler : +setSiguiente(Handler*)
     Handler : +manejar(string)
-
-
----
-
-## ▶️ Ejecución
-
-### Compilar:
-```bash
-g++ main.cpp -o programa
