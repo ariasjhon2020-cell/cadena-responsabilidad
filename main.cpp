@@ -1,87 +1,101 @@
-#include <iostream>
-using namespace std;
+using System;
 
 // Clase base
-class Handler {
-protected:
-    Handler* siguiente;
+abstract class Handler
+{
+    protected Handler siguiente;
 
-public:
-    Handler() : siguiente(nullptr) {}
-
-    void setSiguiente(Handler* sig) {
+    public void SetSiguiente(Handler sig)
+    {
         siguiente = sig;
     }
 
-    virtual void manejar(string solicitud) {
-        if (siguiente != nullptr) {
-            siguiente->manejar(solicitud);
+    public virtual void Manejar(string solicitud)
+    {
+        if (siguiente != null)
+        {
+            siguiente.Manejar(solicitud);
         }
     }
-};
+}
 
 // Validar que no esté vacía
-class ValidarVacio : public Handler {
-public:
-    void manejar(string solicitud) override {
-        if (solicitud.empty()) {
-            cout << "❌ Error: cadena vacía\n";
-        } else {
-            cout << "✅ No está vacía\n";
-            Handler::manejar(solicitud);
+class ValidarVacio : Handler
+{
+    public override void Manejar(string solicitud)
+    {
+        if (string.IsNullOrEmpty(solicitud))
+        {
+            Console.WriteLine("❌ Error: cadena vacía");
+        }
+        else
+        {
+            Console.WriteLine("✅ No está vacía");
+            base.Manejar(solicitud);
         }
     }
-};
+}
 
 // Validar longitud
-class ValidarLongitud : public Handler {
-public:
-    void manejar(string solicitud) override {
-        if (solicitud.length() < 5) {
-            cout << "❌ Error: muy corta\n";
-        } else {
-            cout << "✅ Longitud válida\n";
-            Handler::manejar(solicitud);
+class ValidarLongitud : Handler
+{
+    public override void Manejar(string solicitud)
+    {
+        if (solicitud.Length < 5)
+        {
+            Console.WriteLine("❌ Error: muy corta");
+        }
+        else
+        {
+            Console.WriteLine("✅ Longitud válida");
+            base.Manejar(solicitud);
         }
     }
-};
+}
 
 // Validar número
-class ValidarNumero : public Handler {
-public:
-    void manejar(string solicitud) override {
+class ValidarNumero : Handler
+{
+    public override void Manejar(string solicitud)
+    {
         bool tieneNumero = false;
 
-        for (char c : solicitud) {
-            if (isdigit(c)) {
+        foreach (char c in solicitud)
+        {
+            if (char.IsDigit(c))
+            {
                 tieneNumero = true;
                 break;
             }
         }
 
-        if (!tieneNumero) {
-            cout << "❌ Error: no tiene números\n";
-        } else {
-            cout << "✅ Contiene número\n";
-            cout << "🎉 Cadena válida completamente\n";
+        if (!tieneNumero)
+        {
+            Console.WriteLine("❌ Error: no tiene números");
+        }
+        else
+        {
+            Console.WriteLine("✅ Contiene número");
+            Console.WriteLine("🎉 Cadena válida completamente");
         }
     }
-};
+}
 
-int main() {
-    ValidarVacio h1;
-    ValidarLongitud h2;
-    ValidarNumero h3;
+class Program
+{
+    static void Main(string[] args)
+    {
+        ValidarVacio h1 = new ValidarVacio();
+        ValidarLongitud h2 = new ValidarLongitud();
+        ValidarNumero h3 = new ValidarNumero();
 
-    // Construir cadena
-    h1.setSiguiente(&h2);
-    h2.setSiguiente(&h3);
+        // Construir cadena
+        h1.SetSiguiente(h2);
+        h2.SetSiguiente(h3);
 
-    string entrada;
-    cout << "Ingrese una cadena: ";
-    cin >> entrada;
+        Console.Write("Ingrese una cadena: ");
+        string entrada = Console.ReadLine();
 
-    h1.manejar(entrada);
-
-    return 0;
+        h1.Manejar(entrada);
+    }
 }
